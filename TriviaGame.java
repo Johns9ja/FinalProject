@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class TriviaGame implements ActionListener {
 
-  JTextField userName;
+  JTextField userName; 
 
   JButton beginGame;
   JButton answerOne;
@@ -38,6 +38,7 @@ public class TriviaGame implements ActionListener {
 
   ArrayList<Question> question;
   static String fileName;
+  static String secondFileName;
   static FileReader triviaFile; 
   int score = 0;
   int index = 0;
@@ -95,7 +96,7 @@ TriviaGame(){
     nextQuestion.addActionListener(this);
     endGame.addActionListener(this);
 
-    welcome = new JLabel("Welcome to the Trivia Game!");
+    welcome = new JLabel("Welcome to the Trivia Game! Please Enter Your Name");
     category = new JLabel(question.get(0).getCategoryType());
     questionText = new JLabel(question.get(0).getQuestion());
     questionPoints = new JLabel("This question is worth: " + Integer.toString(question.get(0).getPoints()) + " points");
@@ -106,7 +107,6 @@ TriviaGame(){
     frame.add(userName);
     frame.add(welcome);
     frame.add(beginGame);
-    frame.add(category);
     frame.add(currentScore);
     frame.add(questionText);
     frame.add(answerOne);
@@ -122,22 +122,59 @@ TriviaGame(){
 
     }
       public void actionPerformed(ActionEvent aev) {
-        
-        if(aev.getActionCommand().equals("Begin Game")){
-            questionText.setText(question.get(index).getQuestion());
-            answerOne.setText(question.get(index).getAOne());
-            answerTwo.setText(question.get(index).getATwo());
-            answerThree.setText(question.get(index).getAThree());
-            answerFour.setText(question.get(index).getAFour());
-          }
-        
-        if(aev.getActionCommand().equals(question.get(index).getAOne())){
 
+
+        questionText.setText(question.get(index).getQuestion());
+        answerOne.setText(question.get(index).getAOne());
+        answerTwo.setText(question.get(index).getATwo());
+        answerThree.setText(question.get(index).getAThree());
+        answerFour.setText(question.get(index).getAFour());
+
+        if(aev.getActionCommand().equals(question.get(index).getAOne())){
+          if(question.get(index).getCorrectAnswer().equals(question.get(index).getAOne())){
+            score = score + question.get(index).getPoints();
+            currentScore.setText("Correct! Your Score is now: " + Integer.toString(score));
+          }
+          else{
+            score = score - question.get(index).getPoints();
+            currentScore.setText("Incorrect! Your Score is now: " + Integer.toString(score));
+            
+          }
+        }
+        if(aev.getActionCommand().equals(question.get(index).getATwo())){
+          if(question.get(index).getCorrectAnswer().equals(question.get(index).getATwo())){
+            score = score + question.get(index).getPoints();
+            currentScore.setText("Correct! Your Score is now: " + Integer.toString(score));
+          }
+          else{
+            score = score - question.get(index).getPoints();
+            currentScore.setText("Incorrect! Your Score is now: " + Integer.toString(score));
+          }
+        }
+        if(aev.getActionCommand().equals(question.get(index).getAThree())){
+          if(question.get(index).getCorrectAnswer().equals(question.get(index).getAThree())){
+            score = score + question.get(index).getPoints();
+            currentScore.setText("Correct! Your Score is now: " + Integer.toString(score));
+          }
+          else{
+            score = score - question.get(index).getPoints();
+            currentScore.setText("Incorrect! Your Score is now: " + Integer.toString(score));
+          }
+        }
+        if(aev.getActionCommand().equals(question.get(index).getAFour())){
+          if(question.get(index).getCorrectAnswer().equals(question.get(index).getAFour())){
+            score = score + question.get(index).getPoints();
+            currentScore.setText("Correct! Your Score is now: " + Integer.toString(score));
+          }
+          else{
+            score = score - question.get(index).getPoints();
+            currentScore.setText("Incorrect! Your Score is now: " + Integer.toString(score));
+          }
         }
 
         if(aev.getActionCommand().equals("Next Question")){
-          score = 0;
           index++;
+          currentScore.setText("Current Score: " + score);
           if(index < question.size()){
 
           questionText.setText(question.get(index).getQuestion());
@@ -146,10 +183,18 @@ TriviaGame(){
           answerThree.setText(question.get(index).getAThree());
           answerFour.setText(question.get(index).getAFour());
         }
+          else{
+            endMessage.setText("Game Over! Your Final Score is: " + score);
+          }
+
+
+          
         }
 
 
+
         if(aev.getActionCommand().equals("End Game")){
+          endMessage.setText("Game Over! Your Final Score is: " + score);
           try{
             String highScore = "Game Over! Here are the High Scores";
 
@@ -171,7 +216,7 @@ TriviaGame(){
         }
       }
     }
-
+      
 /*
     FileWriter fw = new FileWriter("highscore.txt",true);
 BufferedWriter bw = new BufferedWriter(fw);
